@@ -13,6 +13,7 @@ import asyncio
 import os
 from pywinauto.application import Application
 
+#TAke Groq Apikey and enr value from .env File 
 env_vars = dotenv_values(".env")
 GroqAPIKey = env_vars.get("GroqAPIKey")
 
@@ -35,10 +36,13 @@ messages = []
 
 SystemChatBot = [{"role":"system","content" : f"Hello, I am {os.environ['Username']}, You're a content writer. You have to Write content like letter, codes, applications, essay, notes, songs, poems etc."}]
 
+
+#Function For Google Search 
 def GoogleSearch(Topic):
     search(Topic)
     return True
 
+#Function For Write any Content On NoteBook
 def content(Topic):
     def OpenNotepad(File):
         default_text_edtior = "Notepad.exe"
@@ -76,15 +80,18 @@ def content(Topic):
     OpenNotepad(rf"Data\{Topic.lower().replace(' ', '')}.txt")   
     return True
 
+#Function For Youtube Search
 def YoutubeSearch(Topic):
     Url4Search = f"https://www.youtube.com/result?search_query={Topic}"
     webbrowser.open(Url4Search)
     return True
 
+#Function For Play Anny Youtube Vedio
 def PlayYouTube(query):
     playonyt(query)
     return True
 
+#Function For Open Any App
 def OpenApp(app, sess=requests.session()):
     try:
         app = Application().start(app)  
@@ -93,7 +100,8 @@ def OpenApp(app, sess=requests.session()):
 
     except Exception as e:
         print(f"Error opening app locally: {e}")
-        
+
+        #IF App is not in local System then Open it From Youtube 
         def extract_links(html):
             if html is None:
                 return []
@@ -122,7 +130,8 @@ def OpenApp(app, sess=requests.session()):
             else:
                 print("No links found.")
         return True
-    
+
+#Function For Close Any System App 
 def CloseApp(app_name):
     app_name = app_name.lower()
     result = os.popen(f'tasklist').read()
@@ -136,7 +145,8 @@ def CloseApp(app_name):
             print(f"The process {app_name} was not found.")
             
     return True
-        
+
+#Function for System Commandas like Volume UP/Down/Mute
 def System(command):
     def mute():
         keyboard.press_and_release("volume mute") 
