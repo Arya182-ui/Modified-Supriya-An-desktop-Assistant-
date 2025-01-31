@@ -1,6 +1,7 @@
 # Personal AI Assistant - Local Setup Guide (with Multilingual & Voice Recognition)
 
-# Note - This is not Actual Process is is just a Manual for upcoming Modifaction and some guid for you To How to Create Your Own Assistant You Can try My or Use your Own After Creating.
+### Note - This is not Actual Process is just a Manual for upcoming Modifaction and some guid for you To How to Create Your Own Assistant You Can try My or Use your Own After Creating.
+
 
 ## 1. Install Required Software & Libraries
 
