@@ -90,9 +90,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## ☕ Support Me
 
-If My projectshelps you  so please support me ? You can show your support by buying me a coffee! Your contributions motivate me to keep improving and building more awesome projects. 💻❤  
+If my projects help you, please consider supporting me! You can show your appreciation by buying me a coffee. Your contributions motivate me to keep improving and building more awesome projects. 💻❤  
 
-[![Buy Me a Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)] (https://arya182-ui.github.io/buy-a-coffee-for-me/)
+[![Buy Me a Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](http://buymeacoffee.com/Arya182)
+
 
 ---
 
