@@ -14,6 +14,9 @@ import threading
 import json
 import os
 
+
+# Use all Api keys and other important key's from .env file for safety reason 
+
 env_vars = dotenv_values(".env")
 Username = env_vars.get("Username")
 Assistantname = env_vars.get("Assistantname")
