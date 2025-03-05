@@ -33,7 +33,7 @@ To use Supriya, you will need:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant.git
+   https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-.git
    ```
 2. Navigate to the project directory:
    ```bash
