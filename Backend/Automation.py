@@ -1,4 +1,3 @@
-# Dont Forgot To give Respect To Me(Arya) If you use It 
 from webbrowser import open as webopen
 from pywhatkit import search, playonyt
 from dotenv import dotenv_values
@@ -12,10 +11,20 @@ import keyboard
 import asyncio
 import os
 from pywinauto.application import Application
+import platform
+import datetime
+import pyperclip
+import cv2
+from PIL import ImageGrab
+from screen_brightness_control import set_brightness
+from security import SecuritySystem  
 
-#TAke Groq Apikey and enr value from .env File 
+
 env_vars = dotenv_values(".env")
 GroqAPIKey = env_vars.get("GroqAPIKey")
+security = SecuritySystem()
+OS_NAME = platform.system()
+
 
 classes = [
     "zCubwf", "hgKElc", "LTKOO sY7ric", "Z0LcW", "gsrt vk_bk FzvWSb YwPhnf", "pclqeee", "tw-Data-text tw-text-small tw-ta",
@@ -37,12 +46,10 @@ messages = []
 SystemChatBot = [{"role":"system","content" : f"Hello, I am {os.environ['Username']}, You're a content writer. You have to Write content like letter, codes, applications, essay, notes, songs, poems etc."}]
 
 
-#Function For Google Search 
 def GoogleSearch(Topic):
     search(Topic)
     return True
 
-#Function For Write any Content On NoteBook
 def content(Topic):
     def OpenNotepad(File):
         default_text_edtior = "Notepad.exe"
@@ -80,18 +87,16 @@ def content(Topic):
     OpenNotepad(rf"Data\{Topic.lower().replace(' ', '')}.txt")   
     return True
 
-#Function For Youtube Search
+
 def YoutubeSearch(Topic):
     Url4Search = f"https://www.youtube.com/result?search_query={Topic}"
     webbrowser.open(Url4Search)
     return True
 
-#Function For Play Anny Youtube Vedio
 def PlayYouTube(query):
     playonyt(query)
     return True
 
-#Function For Open Any App
 def OpenApp(app, sess=requests.session()):
     try:
         app = Application().start(app)  
@@ -100,8 +105,7 @@ def OpenApp(app, sess=requests.session()):
 
     except Exception as e:
         print(f"Error opening app locally: {e}")
-
-        #IF App is not in local System then Open it From Youtube 
+        
         def extract_links(html):
             if html is None:
                 return []
@@ -130,8 +134,7 @@ def OpenApp(app, sess=requests.session()):
             else:
                 print("No links found.")
         return True
-
-#Function For Close Any System App 
+    
 def CloseApp(app_name):
     app_name = app_name.lower()
     result = os.popen(f'tasklist').read()
@@ -146,55 +149,85 @@ def CloseApp(app_name):
             
     return True
 
-#Function for System Commandas like Volume UP/Down/Mute
 def System(command):
-    def mute():
-        keyboard.press_and_release("volume mute") 
-        
-    def volume_up():
+    if "mute" in command:
+        keyboard.press_and_release("volume mute")
+    elif "volume up" in command:
         keyboard.press_and_release("volume up")
-             
-    def volume_down():
-        keyboard.press_and_release("volume down")   
-        
-    if command == "mute" or "unmute":
-        mute()
-    elif command == "volume up":
-        volume_up()
-    elif command == "volume down":
-        volume_down()  
-        
-    return True      
-                                   
+    elif "volume down" in command:
+        keyboard.press_and_release("volume down")
+    elif "brightness" in command:
+        try:
+            level = int(command.split()[-1])
+            set_brightness(level)
+            print(f"✅ Brightness set to {level}%")
+        except:
+            print("❌ Invalid brightness level.")
+    elif "shutdown" in command:
+        if security.requires_auth("shutdown") and not security.authenticate():
+            print("🔐 Shutdown blocked.")
+            return
+        security.log_action("System Shutdown")
+        if OS_NAME == "Windows":
+            os.system("shutdown /s /t 1")
+        else:
+            os.system("shutdown now")
+    elif "reboot" in command:
+        if security.requires_auth("reboot") and not security.authenticate():
+            print("🔐 Reboot blocked.")
+            return
+        security.log_action("System Reboot")
+        if OS_NAME == "Windows":
+            os.system("shutdown /r /t 1")
+        else:
+            os.system("reboot")
+
+def Screenshot():
+    filename = f"Data/screenshot_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+    ImageGrab.grab().save(filename)
+    print(f"📸 Screenshot saved: {filename}")
+
+def WebcamCapture():
+    cam = cv2.VideoCapture(0)
+    ret, frame = cam.read()
+    filename = f"Data/webcam_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+    if ret:
+        cv2.imwrite(filename, frame)
+        print(f"📸 Webcam image saved: {filename}")
+    cam.release()
+    cv2.destroyAllWindows()
+
+def ClipboardControl(action, data=""):
+    if action == "copy":
+        pyperclip.copy(data)
+        print("📋 Copied to clipboard.")
+    elif action == "paste":
+        print("📋 Clipboard content:", pyperclip.paste())
+
+
 async def TranslateAndExecute(commands: list[str]):
     funcs = []
-    
     for command in commands:
+        command = command.strip().lower()
+
         if command.startswith("open"):
-            if "open it" in command:
-                pass
-            
-            if "open file" == command:
-                pass
-            
-            else:
-                fun = asyncio.to_thread(OpenApp, command.removeprefix("open"))    
-                funcs.append(fun)
-                
-        elif command.startswith("general"):
-            pass
-        
-        elif command.startswith("realtime"):
-            pass 
-        
+            app = command.replace("open", "").strip()
+            fun = asyncio.to_thread(OpenApp, app)
+            funcs.append(fun)
+
         elif command.startswith("close"):
-            fun = asyncio.to_thread(CloseApp, command.removeprefix("close"))
+            app = command.replace("close", "").strip()
+            fun = asyncio.to_thread(CloseApp, app)
+            funcs.append(fun)
+
+        elif command.startswith("system"):
+            fun = asyncio.to_thread(System, command.replace("system", "").strip())
             funcs.append(fun)
             
         elif command.startswith("play"):
             fun = asyncio.to_thread(PlayYouTube, command.removeprefix("play"))
             funcs.append(fun)
-
+            
         elif command.startswith("content"):
             fun = asyncio.to_thread(content, command.removeprefix("content"))
             funcs.append(fun)
@@ -206,33 +239,30 @@ async def TranslateAndExecute(commands: list[str]):
         elif command.startswith("youtube search"):
             fun = asyncio.to_thread(YoutubeSearch, command.removeprefix("youtube search"))
             funcs.append(fun)
-
-        elif command.startswith("system"):
-            fun = asyncio.to_thread(System, command.removeprefix("system"))
+            
+        elif command.startswith("clipboard copy"):
+            text = command.replace("clipboard copy", "").strip()
+            fun = asyncio.to_thread(ClipboardControl, "copy", text)
             funcs.append(fun)
-            
-        else:
-            print(f"No Function found. For{command}")
-            
-    results = await asyncio.gather(*funcs) 
-    
-    for result in results:
-        if isinstance(result , str):
-            yield result
-        else:
-            yield result
-            
-async def Automation(commands:list[str]):
-    async for result in TranslateAndExecute(commands):
-        pass
-    
-    return True  
 
-            
-            
-                      
-                                                                                                      
-                                                                        
-                                                                  
-                    
-        
+        elif command.startswith("clipboard paste"):
+            fun = asyncio.to_thread(ClipboardControl, "paste")
+            funcs.append(fun)
+
+        elif command == "screenshot":
+            fun = asyncio.to_thread(Screenshot)
+            funcs.append(fun)
+
+        elif command == "webcam":
+            fun = asyncio.to_thread(WebcamCapture)
+            funcs.append(fun)
+
+        else:
+            print(f"❓ Unknown command: {command}")
+
+    await asyncio.gather(*funcs)
+
+
+async def Automation(commands: list[str]):
+    await TranslateAndExecute(commands)
+    return True

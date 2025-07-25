@@ -1,8 +1,9 @@
-# Dont Forgot To give Respect To Me(Arya) If you use It 
-
 import cohere
 from rich import print
 from dotenv import dotenv_values
+import random
+import time
+
 
 env_vars = dotenv_values(".env")
 CohereAPIkey = env_vars.get("CohereAPIkey")
@@ -44,6 +45,16 @@ You will decide whether a query is a 'general' query, a 'realtime' query, or is 
 -> Respond with 'generate image (image prompt)' if a query is requesting to generate a image with given prompt like 'generate image of a lion', 'generate image of a cat', etc. but if the query is asking to generate multiple images, respond with 'generate image 1st image prompt, generate image 2nd image prompt' and so on.
 -> Respond with 'reminder (datetime with message)' if a query is requesting to set a reminder like 'set a reminder at 9:00pm on 25th june for my business meeting.' respond with 'reminder 9:00pm 25th june business meeting'.
 -> Respond with 'system (task name)' if a query is asking to mute, unmute, volume up, volume down , etc. but if the query is asking to do multiple tasks, respond with 'system 1st task, system 2nd task', etc.
+-> Respond with 'system volume up' if the query is asking to increase volume like 'volume up', 'increase volume', etc.
+-> Respond with 'system volume down' if the query is asking to decrease volume like 'volume down', 'lower the volume', etc.
+-> Respond with 'system mute' if the query is asking to mute or unmute like 'mute the system', 'unmute the system'.
+-> Respond with 'system brightness up' if the query is asking to increase screen brightness like 'brightness up', 'increase brightness'.
+-> Respond with 'system brightness down' if the query is asking to decrease screen brightness like 'brightness down', 'lower brightness'.
+-> Respond with 'system shutdown' if the query is asking to shut down the system like 'shutdown the computer', 'turn off my pc'.
+-> Respond with 'system restart' if the query is asking to restart the system like 'restart my pc', 'reboot the computer'.
+-> Respond with 'system screenshot' if the query is asking to take a screenshot like 'take screenshot', 'capture screen'.
+-> Respond with 'system clipboard' if the query is asking to show clipboard content like 'show clipboard', 'read from clipboard'.
+-> Respond with 'system webcam' if the query is asking to open camera or capture webcam like 'take photo from webcam', 'open camera'.
 -> Respond with 'content (topic)' if a query is asking to write any type of content like application, codes, emails or anything else about a specific topic but if the query is asking to write multiple types of content, respond with 'content 1st topic, content 2nd topic' and so on.
 -> Respond with 'google search (topic)' if a query is asking to search a specific topic on google but if the query is asking to search multiple topics on google, respond with 'google search 1st topic, google search 2nd topic' and so on.
 -> Respond with 'youtube search (topic)' if a query is asking to search a specific topic on youtube but if the query is asking to search multiple topics on youtube, respond with 'youtube search 1st topic, youtube search 2nd topic' and so on.
@@ -52,12 +63,17 @@ You will decide whether a query is a 'general' query, a 'realtime' query, or is 
 *** Respond with 'general (query)' if you can't decide the kind of query or if a query is asking to perform a task which is not mentioned above. ***
 """
 
+
 def FirstLayerDMM(prompt: str = "test", retries: int = 0, max_retries: int = 3):
+    fallback_response = ["general (query)"]
+
     if retries > max_retries:
-        return ["general (query)"]
-    
-    messages = [{"role": "user", "content": prompt}]
-    
+        return fallback_response
+
+    if not prompt or not prompt.strip():
+        print("[yellow]Empty prompt received. Skipping Cohere call.[/yellow]")
+        return fallback_response
+
     try:
         stream = co.chat_stream(
             model='command-r-plus',
@@ -68,22 +84,24 @@ def FirstLayerDMM(prompt: str = "test", retries: int = 0, max_retries: int = 3):
             connectors=[],
             preamble=preamble
         )
+
+        response = ""
+        for event in stream:
+            if event.event_type == "text-generation":
+                response += event.text
+
+        response = response.replace("\n", "").split(",")
+        response = [task.strip() for task in response if any(task.strip().startswith(func) for func in funcs)]
+
+        if not response or "(query)" in response[0].lower():
+            return FirstLayerDMM(prompt=prompt, retries=retries + 1)
+
+        return response
+
     except Exception as e:
         print(f"[bold red]Error: {e}[/bold red]")
-        return ["general (query)"]
+        return fallback_response
 
-    response = ""
-    for event in stream:
-        if event.event_type == "text-generation":
-            response += event.text
-
-    response = response.replace("\n", "").split(",")
-    response = [task.strip() for task in response if any(task.strip().startswith(func) for func in funcs)]
-
-    if "(query)" in response:
-        return FirstLayerDMM(prompt=prompt, retries=retries + 1)
-    
-    return response
 
 if __name__ == "__main__":
     try:
@@ -93,7 +111,17 @@ if __name__ == "__main__":
             if user_input.lower() in ["exit", "quit", "bye"]:
                 print("[bold blue]Goodbye![/bold blue]")
                 break
-            response = FirstLayerDMM(user_input)
-            print(response)
+
+            if not user_input.strip():
+                print("[yellow]⚠️ Please type something.[/yellow]")
+                continue
+
+            try:
+                response = FirstLayerDMM(user_input)
+                print("[green]Response:[/green]", response)
+            except Exception as e:
+                print(f"[bold red]❌ Error while processing input: {e}[/bold red]")
+
     except KeyboardInterrupt:
         print("\n[bold blue]Goodbye![/bold blue]")
+
