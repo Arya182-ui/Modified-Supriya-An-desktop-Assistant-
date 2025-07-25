@@ -647,10 +647,9 @@ Your support helps drive continuous innovation and advanced feature development!
 [![Portfolio](https://img.shields.io/badge/Portfolio-Visit-blue?style=for-the-badge&logo=portfolio)](https://www.ayushgangwar.tech/)
 
 **[Ayush Gangwar](https://www.ayushgangwar.tech/)**  
-*AI Engineer & Python Developer*  
 *Original Creator - Now in Maintenance Mode*
 
-**📧 Contact for Project Handover or Major Contributions:** [Email](mailto:your-email@example.com)
+**📧 Contact for Project Handover or Major Contributions:** [Email](mailto:arya119000@gmail.com)
 
 ### 🌟 **Join the Community-Driven Development**
 
