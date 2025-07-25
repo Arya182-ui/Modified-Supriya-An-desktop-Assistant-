@@ -9,7 +9,8 @@
 [![GUI Interface](https://img.shields.io/badge/Modern-GUI-9C27B0?style=for-the-badge&logo=react&logoColor=white)](https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-)
 
 [![Version](https://img.shields.io/badge/Version-Advanced%202.0-success?style=for-the-badge&logo=github)](https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-)
-[![Status](https://img.shields.io/badge/Status-Active%20Development-blue?style=for-the-badge&logo=rocket)](https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-)
+[![Status](https://img.shields.io/badge/Status-Maintenance%20Mode-yellow?style=for-the-badge&logo=tools)](https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-)
+[![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=for-the-badge&logo=git)](https://github.com/Arya182-ui/Modified-Supriya-An-desktop-Assistant-)
 [![Legacy Version](https://img.shields.io/badge/Legacy%20Version-Available-orange?style=for-the-badge&logo=archive)](https://github.com/Arya182-ui/Supriya-An-desktop-assistant-)
 
 </div>
@@ -18,6 +19,25 @@
 
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=1000&lines=🚀+Advanced+AI+Desktop+Assistant;🎤+Voice+Command+%26+Natural+Language;🖼️+Real-time+Image+Generation;🌐+Live+Web+Search+Integration;🧠+Intelligent+Task+Automation" alt="Typing Animation" />
+</div>
+
+## 📢 **Project Status**
+
+> **⚠️ IMPORTANT NOTICE:** This project is currently in **maintenance mode**. The original developer is no longer actively working on new features, but the project remains **fully functional** and **open for community contributions**. We welcome pull requests, bug fixes, and feature enhancements from the community!
+
+<div align="center">
+
+### 🤝 **Community-Driven Development**
+
+| Status | Description | Action |
+|:-------|:------------|:-------|
+| 🔧 **Maintenance Mode** | Core functionality stable, minimal updates | Community contributions welcome |
+| 🐛 **Bug Fixes** | Issues will be reviewed and merged | Submit pull requests |
+| ✨ **New Features** | Community-driven feature development | Propose and implement |
+| 📚 **Documentation** | Open for improvements and translations | Help improve docs |
+
+**Want to contribute?** Check our [Contributing Guidelines](#-contributing-to-advanced-supriya) below!
+
 </div>
 
 > **The most advanced Python-based AI assistant with cutting-edge features including real-time web search, AI image generation, natural language processing, and intelligent task automation. Supriya transforms voice commands into powerful actions with a beautiful modern GUI interface.**
@@ -446,7 +466,11 @@ Supriya: "Tomorrow will be partly cloudy with a high of 72°F."
 
 ### 🛠️ **Development Guidelines**
 
+**🌟 This project is community-driven! The original developer welcomes contributions from developers worldwide.**
+
 </div>
+
+> **📢 MAINTAINER NOTE:** While I'm no longer actively developing new features, I review and merge quality contributions. This is a great opportunity for developers to contribute to an established AI project!
 
 We welcome contributions to make Supriya even more powerful! Here's how you can contribute:
 
@@ -513,6 +537,14 @@ We welcome contributions to make Supriya even more powerful! Here's how you can 
 - **🎖️ Badges**: Special contributor badges and recognition
 - **📚 Documentation**: Credit in project documentation
 - **🎉 Community**: Access to exclusive developer community
+
+### 💡 **Current Contribution Priorities:**
+- **🐛 Bug Fixes**: Critical bugs and stability improvements
+- **📚 Documentation**: Better guides, tutorials, and API docs
+- **🌍 Internationalization**: Multi-language support
+- **⚡ Performance**: Optimization and speed improvements
+- **🔌 Integrations**: New API integrations and services
+- **🎨 UI/UX**: Interface improvements and new themes
 
 ---
 
@@ -616,20 +648,22 @@ Your support helps drive continuous innovation and advanced feature development!
 
 **[Ayush Gangwar](https://www.ayushgangwar.tech/)**  
 *AI Engineer & Python Developer*  
-*Building the future of intelligent assistants*
+*Original Creator - Now in Maintenance Mode*
 
-### 🌟 **Join the AI Revolution**
+**📧 Contact for Project Handover or Major Contributions:** [Email](mailto:your-email@example.com)
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=800&lines=Experience+Next-Gen+AI+Assistant+%F0%9F%A4%96;Voice+Commands+%2B+Image+Generation+%F0%9F%8E%A8;Real-time+Web+Search+%2B+Automation+%F0%9F%8C%90;The+Future+is+Here%21+%F0%9F%9A%80" alt="Join the Revolution" />
+### 🌟 **Join the Community-Driven Development**
 
-### 📬 **Get Started Today**
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=800&lines=Community-Driven+AI+Assistant+%F0%9F%A4%96;Open+for+Contributions+%2B+Improvements+%F0%9F%8E%A8;Stable+%26+Functional+%2B+Extensible+%F0%9F%8C%90;Join+Our+Developer+Community%21+%F0%9F%9A%80" alt="Community Development" />
 
-Ready to transform your productivity with advanced AI? 
+### 📬 **Get Involved Today**
 
-1. **⭐ Star this repository** to show your interest
-2. **📥 Clone and setup** following our comprehensive guide
-3. **🚀 Experience the future** of AI-powered assistance
-4. **🤝 Join our community** of AI enthusiasts and developers
+This project is **community-maintained** and welcomes new contributors! 
+
+1. **⭐ Star this repository** to show your support
+2. **🍴 Fork and contribute** following our guidelines
+3. **� Fix bugs or add features** that interest you
+4. **🤝 Join our community** of developers and users
 
 **⭐ Don't forget to star the repo if Supriya amazes you! ⭐**
 
