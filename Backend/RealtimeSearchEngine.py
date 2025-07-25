@@ -6,7 +6,8 @@ from json import load, dump
 import os
 import datetime
 from dotenv import dotenv_values
-
+import requests
+import geocoder
 
 env_vars = dotenv_values(".env")
 Username = env_vars.get("Username")
@@ -59,23 +60,104 @@ SystemChatBot=[
     {"role": "assistant","content":"Hello , how can i help you?"}
 ]
 
+def get_gps_location():
+    """
+    Get the current location based on GPS (or IP fallback if GPS is unavailable).
+    """
+    g = geocoder.ip('me')  
+
+    if g.latlng:
+        latitude, longitude = g.latlng
+        city = g.city
+        region = g.state
+        country = g.country
+        return latitude, longitude, city, region, country
+    else:
+        
+        return get_ipinfo_location()
+
+def get_ipinfo_location():
+    """
+    Get the location information from IPinfo API in case GPS is unavailable.
+    """
+    ip_info_url = "http://ipinfo.io/json"
+    try:
+        response = requests.get(ip_info_url)
+        location_data = response.json()
+        loc = location_data.get("loc", "0,0")  
+        latitude, longitude = loc.split(",")
+        city = location_data.get("city", "Unknown City")
+        region = location_data.get("region", "Unknown Region")
+        country = location_data.get("country", "Unknown Country")
+
+        return latitude, longitude, city, region, country
+    except requests.exceptions.RequestException as e:
+        print(f"Error getting IP location: {e}")
+        return None, None, "Unknown City", "Unknown Region", "Unknown Country"
+
+def fetch_live_data():
+    """
+    Fetch live weather data using the user's GPS or IP-based location and OpenWeatherMap API.
+    """
+    latitude, longitude, city, region, country = get_gps_location()
+
+    if latitude and longitude:
+        api_key = "eba808053e1f060966d57f79d4b5f08a"
+        url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&units=metric"  
+
+        try:
+            response = requests.get(url)
+            data = response.json()
+
+            if data.get("weather"):
+                weather_description = data["weather"][0]["description"]
+                temperature = data["main"]["temp"]
+                humidity = data["main"]["humidity"]
+                pressure = data["main"]["pressure"]
+                wind_speed = data["wind"]["speed"]
+                cloudiness = data["clouds"]["all"]
+
+                weather_info = (
+                    f"Location: {city}, {region}, {country}\n"
+                    f"Weather: {weather_description}\n"
+                    f"Temperature: {temperature}°C\n"
+                    f"Humidity: {humidity}%\n"
+                    f"Pressure: {pressure} hPa\n"
+                    f"Wind Speed: {wind_speed} m/s\n"
+                    f"Cloudiness: {cloudiness}%"
+                )
+
+                return weather_info
+            else:
+                return "Weather data not available."
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching weather data: {e}")
+            return "Could not fetch weather data."
+    else:
+        return "Could not determine location."
+
 def Information():
-    data = ""
     current_date_time = datetime.datetime.now()
+    
     day = current_date_time.strftime('%A')
     date = current_date_time.strftime('%d')
     month = current_date_time.strftime('%B')
     year = current_date_time.strftime('%Y')
-    hour = current_date_time.strftime('%H') 
+    hour = current_date_time.strftime('%H')
     minute = current_date_time.strftime('%M')
     second = current_date_time.strftime('%S')
-    date += f"Use the Real-time Information if needed:\n"
-    date += f"Day : {day}\n"
-    date += f"Date : {date}\n"
-    date += f"Month : {month}\n"
-    date += f"Year : { year}\n"
-    date += f"Time : {hour} hours , {minute} minute , {second} second.\n"
-    return date
+
+    weather = fetch_live_data()
+
+    info = "Use the Real-time Information if needed:\n"
+    info += f"Day : {day}\n"
+    info += f"Date : {date}\n"
+    info += f"Month : {month}\n"
+    info += f"Year : {year}\n"
+    info += f"Time : {hour} hours, {minute} minutes, {second} seconds.\n"
+    info += f"Weather : {weather}\n"
+    
+    return info
     
 def RealtimeSearchEngine(prompt):
     global SystemChatBot, messages 
