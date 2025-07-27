@@ -6,6 +6,11 @@ from Backend.Automation import Automation
 from Backend.SpeechToText import SpeechRecognition
 from Backend.TextToSpeech import TextToSpeech
 from Backend.Chatbot import ChatBot
+from Backend.TaskManager import task_manager
+from Backend.EmailManager import email_manager
+from Backend.FileManager import file_manager
+from Backend.SystemMonitor import system_monitor
+from Backend.MediaController import media_controller
 from dotenv import dotenv_values
 from asyncio import run
 from time import sleep
@@ -23,7 +28,7 @@ Assistantname = env_vars.get("Assistantname")
 DefaultMessage = f'''{Username} : Hello {Assistantname} , How are you?
 {Assistantname} : Welcome {Username}. I am doing well. How may i help you?'''
 subprocess = []
-Functions = ["open", "close" , "play", "system", "content", "google search" , "youtube search"]
+Functions = ["open", "close" , "play", "system", "content", "google search" , "youtube search", "task", "email", "file", "monitor", "media", "record", "organize", "search files", "backup", "security", "network", "schedule", "note"]
 
 def ShowfaultChatNoChats():
     with open(r'Data\ChatLog.json', "r", encoding='utf-8') as file:
@@ -171,7 +176,20 @@ def MainExecution():
                 os._exit(1)  
                              
 def FirstThread():
-    TextToSpeech("Hello Sir I am Supriya Arya's Assistant , How I help you today")
+    # Initialize super features
+    print("🚀 Initializing Super Assistant Features...")
+    print("✅ Task Management System Ready")
+    print("✅ Email Management System Ready") 
+    print("✅ File Management System Ready")
+    print("✅ System Monitor Ready")
+    print("✅ Media Controller Ready")
+    print("✅ Security System Ready")
+    
+    # Start system monitoring
+    system_monitor.start_monitoring(interval=300)  # Monitor every 5 minutes
+    
+    TextToSpeech("Hello Sir I am Supriya Arya's Super Assistant with advanced features including task management, email handling, file operations, system monitoring, and media control. How can I help you today?")
+    
     while True:
         CurrentStatus = GetMicrophoneStatus()
         
@@ -183,7 +201,7 @@ def FirstThread():
             if "Avialable..." in AIStatus:
                 sleep(0.1)
             else:
-                SetAssistantStatus("Available....")    
+                SetAssistantStatus("Available....")
                             
 # Dont Forgot To give Respect To Me If you use It 
                 

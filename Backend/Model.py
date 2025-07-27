@@ -17,7 +17,9 @@ co = cohere.Client(api_key=CohereAPIkey)
 funcs = [
     "exit", "general", "realtime", "open", "close", "play",
     "generate image", "system", "content", "google search",
-    "youtube search", "reminder"
+    "youtube search", "reminder", "task", "email", "file",
+    "monitor", "media", "record", "organize", "search files",
+    "backup", "security", "network", "schedule", "note"
 ]
 
 ChatHistory = [
@@ -44,6 +46,19 @@ You will decide whether a query is a 'general' query, a 'realtime' query, or is 
 -> Respond with 'play (song name)' if a query is asking to play any song like 'play afsanay by ys', 'play let her go', etc. but if the query is asking to play multiple songs, respond with 'play 1st song name, play 2nd song name' and so on.
 -> Respond with 'generate image (image prompt)' if a query is requesting to generate a image with given prompt like 'generate image of a lion', 'generate image of a cat', etc. but if the query is asking to generate multiple images, respond with 'generate image 1st image prompt, generate image 2nd image prompt' and so on.
 -> Respond with 'reminder (datetime with message)' if a query is requesting to set a reminder like 'set a reminder at 9:00pm on 25th june for my business meeting.' respond with 'reminder 9:00pm 25th june business meeting'.
+-> Respond with 'task (task action and details)' if a query is about task management like 'create task buy groceries', 'mark task as complete', 'show my tasks', 'create task with high priority', etc.
+-> Respond with 'email (email action and details)' if a query is about email management like 'read my emails', 'send email to john', 'check unread emails', 'compose email', etc.
+-> Respond with 'file (file operation and details)' if a query is about file management like 'list files in downloads', 'search for document', 'organize my files', 'delete file', 'copy file', 'move file', etc.
+-> Respond with 'monitor (system monitoring request)' if a query is about system monitoring like 'check system status', 'show cpu usage', 'monitor performance', 'show running processes', 'check memory usage', etc.
+-> Respond with 'media (media control action)' if a query is about media control like 'play music', 'pause song', 'next track', 'volume up', 'start recording', 'stop music', etc.
+-> Respond with 'record (recording type and details)' if a query is specifically about recording like 'record audio', 'start video recording', 'stop recording', 'record voice memo', etc.
+-> Respond with 'organize (organization request)' if a query is about organizing files or data like 'organize downloads folder', 'sort files by type', 'clean up desktop', etc.
+-> Respond with 'search files (search query)' if a query is specifically about searching files like 'find document about budget', 'search for photos from last month', etc.
+-> Respond with 'backup (backup request)' if a query is about backing up data like 'backup my files', 'create backup', 'restore backup', etc.
+-> Respond with 'security (security action)' if a query is about security like 'check security logs', 'change password', 'encrypt file', 'scan for threats', etc.
+-> Respond with 'network (network action)' if a query is about network operations like 'check internet connection', 'show network status', 'test connectivity', etc.
+-> Respond with 'schedule (scheduling action)' if a query is about scheduling like 'schedule meeting', 'add to calendar', 'set appointment', etc.
+-> Respond with 'note (note action)' if a query is about taking notes like 'take note', 'save this information', 'create note', etc.
 -> Respond with 'system (task name)' if a query is asking to mute, unmute, volume up, volume down , etc. but if the query is asking to do multiple tasks, respond with 'system 1st task, system 2nd task', etc.
 -> Respond with 'system volume up' if the query is asking to increase volume like 'volume up', 'increase volume', etc.
 -> Respond with 'system volume down' if the query is asking to decrease volume like 'volume down', 'lower the volume', etc.

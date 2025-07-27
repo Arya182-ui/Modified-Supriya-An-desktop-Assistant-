@@ -1,3 +1,4 @@
+# Core dependencies
 python-dotenv
 groq
 AppOpener
@@ -16,3 +17,37 @@ edge-tts
 PyQt5
 webdriver-manager
 geocoder
+
+# Security and encryption
+cryptography
+
+# System monitoring
+psutil
+
+# Email management
+secure-smtplib
+
+# Audio/Video processing
+mutagen
+pyaudio
+opencv-python
+numpy
+
+# File management
+pathlib2
+
+# Advanced networking
+netifaces
+
+# Screen control
+screen-brightness-control
+
+# Windows automation (Windows only)
+pywinauto; platform_system=="Windows"
+
+# Additional utilities
+uuid
+hashlib
+threading
+dataclasses
+enum34; python_version<"3.4"
