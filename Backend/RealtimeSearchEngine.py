@@ -13,6 +13,7 @@ env_vars = dotenv_values(".env")
 Username = env_vars.get("Username")
 Assistantname = env_vars.get("Assistantname")
 GroqAPIKey = env_vars.get("GroqAPIKey")
+WeatherAPIKey = env_vars.get("WeatherAPIKey")
 
 if not (Username and Assistantname and GroqAPIKey):
     raise ValueError("Missing required environment variables in .env file.")
@@ -102,7 +103,7 @@ def fetch_live_data():
     latitude, longitude, city, region, country = get_gps_location()
 
     if latitude and longitude:
-        api_key = "eba808053e1f060966d57f79d4b5f08a"
+        api_key = WeatherAPIKey
         url = f"http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={api_key}&units=metric"  
 
         try:
