@@ -17,7 +17,12 @@ import pyperclip
 import cv2
 from PIL import ImageGrab
 from screen_brightness_control import set_brightness
-from security import SecuritySystem  
+from Backend.security import SecuritySystem  
+from Backend.TaskManager import task_manager, create_task_voice, list_tasks_voice, complete_task_voice
+from Backend.EmailManager import email_manager, read_emails_voice, send_email_voice, email_summary_voice
+from Backend.FileManager import file_manager, list_files_voice, search_files_voice, organize_files_voice
+from Backend.SystemMonitor import system_monitor, get_system_status_voice, get_top_processes_voice, get_network_status_voice
+from Backend.MediaController import media_controller, play_music_voice, volume_control_voice, record_audio_voice, library_stats_voice
 
 
 env_vars = dotenv_values(".env")
@@ -256,6 +261,81 @@ async def TranslateAndExecute(commands: list[str]):
         elif command == "webcam":
             fun = asyncio.to_thread(WebcamCapture)
             funcs.append(fun)
+            
+        # New super features
+        elif command.startswith("task"):
+            task_command = command.replace("task", "").strip()
+            if "create" in task_command:
+                result = create_task_voice(command)
+            elif "list" in task_command or "show" in task_command:
+                result = list_tasks_voice(command)
+            elif "complete" in task_command or "done" in task_command:
+                result = complete_task_voice(command)
+            else:
+                result = list_tasks_voice(command)
+            print(f"📋 Task: {result}")
+            
+        elif command.startswith("email"):
+            email_command = command.replace("email", "").strip()
+            if "read" in email_command or "check" in email_command:
+                result = read_emails_voice(command)
+            elif "send" in email_command:
+                result = send_email_voice(command)
+            elif "summary" in email_command or "stats" in email_command:
+                result = email_summary_voice(command)
+            else:
+                result = read_emails_voice(command)
+            print(f"📧 Email: {result}")
+            
+        elif command.startswith("file"):
+            file_command = command.replace("file", "").strip()
+            if "list" in file_command or "show" in file_command:
+                result = list_files_voice(command)
+            elif "search" in file_command or "find" in file_command:
+                result = search_files_voice(command)
+            elif "organize" in file_command:
+                result = organize_files_voice(command)
+            else:
+                result = list_files_voice(command)
+            print(f"📁 File: {result}")
+            
+        elif command.startswith("monitor"):
+            monitor_command = command.replace("monitor", "").strip()
+            if "status" in monitor_command or "system" in monitor_command:
+                result = get_system_status_voice(command)
+            elif "process" in monitor_command:
+                result = get_top_processes_voice(command)
+            elif "network" in monitor_command:
+                result = get_network_status_voice(command)
+            else:
+                result = get_system_status_voice(command)
+            print(f"📊 Monitor: {result}")
+            
+        elif command.startswith("media"):
+            media_command = command.replace("media", "").strip()
+            if "play" in media_command or "music" in media_command:
+                result = play_music_voice(command)
+            elif "volume" in media_command:
+                result = volume_control_voice(command)
+            elif "record" in media_command:
+                result = record_audio_voice(command)
+            elif "stats" in media_command or "library" in media_command:
+                result = library_stats_voice(command)
+            else:
+                result = play_music_voice(command)
+            print(f"🎵 Media: {result}")
+            
+        elif command.startswith("record"):
+            result = record_audio_voice(command)
+            print(f"🎤 Record: {result}")
+            
+        elif command.startswith("organize"):
+            result = organize_files_voice(command)
+            print(f"🗂️ Organize: {result}")
+            
+        elif command.startswith("search files"):
+            result = search_files_voice(command)
+            print(f"🔍 Search: {result}")
 
         else:
             print(f"❓ Unknown command: {command}")
