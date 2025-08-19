@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤖 Supriya - Advanced AI Assistant
+# 🤖 Advanced AI Assistant
 ### *Next-Generation Intelligent Desktop Companion*
 
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
